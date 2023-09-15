@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/perfil']">
+        <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Lista de Tareas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item lines="none" button color="primary" (click)="nuevaTarea()">
+    Agregar una tarea nueva
+    <ion-icon class="ion-padding-horizontal" name="add-circle-outline"></ion-icon>
+  </ion-item>
+
+  <ion-item-group class="ion-padding-vertical" *ngIf="lista_Tarea.hoy.length > 0">
+    <ion-item-divider>
+      <ion-label class="ion-text-center">Tareas para hoy</ion-label>
+    </ion-item-divider>
+    <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
+      <item-tarea *ngFor="let tarea of lista_Tarea.hoy" [data]="tarea" (deleteTarea)="borrarTarea(tarea)"
+        (updateTarea)="actualizarTarea(tarea)"></item-tarea>
+    </ion-reorder-group>
+  </ion-item-group>
+
+  <ion-item-group *ngIf="lista_Tarea.ignorar.length > 0">
+    <ion-item-divider>
+      <ion-label>Tareas de la semana</ion-label>
+    </ion-item-divider>
+    <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
+      <item-tarea *ngFor="let tarea of lista_Tarea.ignorar" [data]="tarea" (deleteTarea)="borrarTarea(tarea)"
+        (updateTarea)="actualizarTarea(tarea)"></item-tarea>
+    </ion-reorder-group>
+  </ion-item-group>
+</ion-content>

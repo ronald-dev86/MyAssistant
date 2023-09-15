@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+    <div slot="end" class="ion-padding-horizontal">
+      <ion-icon *ngIf="!themeToggle" name="sunny-outline"></ion-icon>
+      <ion-toggle [(ngModel)]="themeToggle" (ionChange)="toggleChange($event)" justify="space-between" class="ion-padding-horizontal"></ion-toggle>
+      <ion-icon *ngIf="themeToggle" slot="end" name="moon-outline"></ion-icon>
+    </div>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+</ion-content>

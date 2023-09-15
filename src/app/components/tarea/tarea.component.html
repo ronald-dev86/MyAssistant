@@ -1,0 +1,60 @@
+<ion-card [disabled]="data.realizada">
+  <ion-item lines="none">
+    <ion-reorder slot="start">
+      <ion-icon name="swap-vertical-outline"></ion-icon>
+    </ion-reorder>
+    <div style="width: 100%;" class="ion-padding-vertical">
+      <div style="display: flex; justify-content: space-between;
+                            flex-wrap: nowrap;
+                            align-items: center;
+                            width: 100%;">
+        <div>
+          <h2 class="ion-no-margin">{{data.titulo}}</h2>
+        </div>
+        <div>
+          <ion-button fill="clear" (click)="showDetails(data)">
+            <ion-icon *ngIf="data.page.show_details === false; else upDetails  " slot="icon-only"
+              name="chevron-down-circle-outline"></ion-icon>
+            <ng-template #upDetails>
+              <ion-icon slot="icon-only" name="chevron-up-circle-outline"></ion-icon>
+            </ng-template>
+          </ion-button>
+        </div>
+      </div>
+      <div>
+        <p class="ion-no-margin">{{data.descripcion}}</p>
+      </div>
+    </div>
+  </ion-item>
+  <ion-list lines="none" *ngIf="data.page.show_details === true">
+    <ion-item button (click)="seleccionarDias()" *ngIf="data.activa">
+      <ion-icon slot="start" name="calendar-outline"></ion-icon>
+      <ion-label>{{getLabelDays(data.dias)}}</ion-label>
+    </ion-item>
+    <ion-item button (click)="prioridad()" *ngIf="data.activa">
+      <ion-icon slot="start" name="speedometer-outline"></ion-icon>
+      <ion-label>Prioridad ({{data.prioridad}})</ion-label>
+    </ion-item>
+    <ion-item button>
+      <ion-icon slot="start" name="play-circle-outline"></ion-icon>
+      <ion-toggle [(ngModel)]="data.activa" (ionChange)="toggleChange($event)">Activa</ion-toggle>
+    </ion-item>
+    <ion-item button *ngIf="realizada === false; else felicitaciones" (click)="tareaRealizada()">
+      <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+      <ion-label>Tarea realizada</ion-label>
+      <ion-button slot="end" color="success" size="small" shape="round">
+        <span style="text-transform: capitalize;">hecho</span>
+      </ion-button>
+    </ion-item>
+    <ng-template #felicitaciones>
+      <ion-item>
+        <ion-icon name="ribbon-outline" slot="start"></ion-icon>
+        <ion-label>Felicitaciones! tarea realizada</ion-label>
+      </ion-item>
+    </ng-template>
+    <ion-item button (click)="onDeleteTarea()">
+      <ion-icon slot="start" name="trash-outline"></ion-icon>
+      <span style="text-transform: capitalize;">Borrar</span>
+    </ion-item>
+  </ion-list>
+</ion-card>
